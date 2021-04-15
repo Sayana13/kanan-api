@@ -1,48 +1,18 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const routes = require("./routes");
+const bodyParser = require("./bodyParser");
 
 const app = express();
-const PORT = process.env.PORT || 5000; //kogda my pishem PORT capslokom to ob'yavlyaem constanty
+const PORT = process.env.PORT || 5000; //kogda my pishem PORT capslokom to ob'yavlyaem constanty, process.env nyzhno dlya heroku chtob ispolzovat imenno tot host
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
 
- let cards = [
-    {id: "1", name: 'First Card', status: 'todo', priority: 2},
-    {id: "2", name: 'Second Card', status: 'progress', priority: 5},
-    {id: "3", name: 'Next Card', status: 'review', priority: 10}
-]
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
-app.get('/card', (req, res) => {
-    res.send(cards);
-})
-
-app.delete('/card/:cardId', (req, res) => {
-    console.log(req)
-    const cardId = req.params.cardId;
-    cards = cards.filter(el => el.id !== cardId);
-    res.send(cardId);
-})
-
-app.post('/card', (req, res)=> {
-    console.log(req)
-    const card = req.body;
-    cards.push({id: Math.random().toString(), ...card});
-    res.send('Card created');
-})
-
-app.patch('/card/:cardId', (req, res)=> {
-    const cardId = req.params.cardId;
-    const card = req.body;
-
-   cards = cards.map(el => el.id === cardId ? ({ ...card, id: el.id }) : el);
-    res.send('Card updated');
-})
+bodyParser(app);
+routes(app);
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
 })
+
+
+//mongodb+srv://Sayana:viSdes-2vasco-tepvek@cluster0.dslbz.mongodb.net/kanban?retryWrites=true&w=majority

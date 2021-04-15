@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000; //kogda my pishem PORT capslokom to ob'yavlyaem constanty
+const PORT = process.env.PORT || 5000; //kogda my pishem PORT capslokom to ob'yavlyaem constanty
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

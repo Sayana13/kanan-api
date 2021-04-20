@@ -5,8 +5,6 @@ const bodyParser = require("./bodyParser");
 const app = express();
 const PORT = process.env.PORT || 5000; //kogda my pishem PORT capslokom to ob'yavlyaem constanty, process.env nyzhno dlya heroku chtob ispolzovat imenno tot host
 
-
-
 bodyParser(app);
 routes(app);
 
